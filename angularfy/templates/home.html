@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html ng-app="angularfy">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+
+    <!-- Le styles -->
+    <link href="//netdna.bootstrapcdn.com/bootswatch/3.1.1/superhero/bootstrap.min.css" rel="stylesheet" type='text/css' />
+    <link href="/static/css/bootstrap.vertical-tabs.min.css" rel="stylesheet" type='text/css' />
+    <link href="/static/css/angularfy.css" rel="stylesheet" type='text/css' />
+    <link rel="shortcut icon" type="image/png" href="/static/img/favicon.ico"/>
+    <link rel="shortcut icon" type="image/png" href="http://angularfy.herokuapp.com/static/img/favicon.ico"/>
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.15/angular-route.js"></script>
+    <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.js"></script>
+    <script src="/static/js/underscore-min.js"></script>
+    <script src="/static/js/underscore.string.min.js"></script>
+    <script type="text/javascript"> _.mixin(_.str.exports()) </script>
+    <script src="/static/js/angularfy.js"></script>
+ 
+
+    <title>Get me a loan!</title>
+
+  </head>
+
+  <body ng-controller="mainController">
+
+
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <div class="logo col-sm-5">
+            <a href="/">
+              <img src="/static/img/white_logo_small.png">
+            </a>
+          </div>
+        </div>
+    
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="active"><a id="loc" href="#loc">Get a Line of Credit</a></li>
+            <li><a id="loan" href="#loan">Get a Loan</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <div ng-controller="DropdownCtrl">
+                <span class="dropdown" on-toggle="toggled(open)">
+                  <a href class="dropdown-toggle" data-toggle="dropdown">
+                    <img class="avatar" src="/static/img/homer_simpson_avatar.jpg">
+                    Signed in as: <span class='username'>{{ username }}</span> 
+                    <b class="caret"></b>
+                  </a>
+
+                  <ul class="dropdown-menu">
+                    <li><a href="#">My Applications</a></li>
+                    <li><a href="#">My Loans</a></li>
+                    <li><a href="#">My Account</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Log Out</a></li>
+                  </ul>
+                </span>
+              </div>
+            </li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    
+    <!--<div id='page-contents'></div>-->
+    {% verbatim %}
+    <div id="main">
+      <div ng-view></div>
+    </div>
+    {% endverbatim %}
+  </body>
+</html>

@@ -1,0 +1,18 @@
+{% verbatim %}
+<div id="tab-content" ng-controller="TabsCtrl">
+  <tabset vertical="true">
+    <tab ng-click="tabChanged(tab)" ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disabled="tab.disabled">
+    </tab>
+  </tabset>
+  <div class="row col-sm-10">
+    <form class="form-horizontal" role="form" id="input-form" ng-controller="FormCtrl">
+      <div class="form-group" ng-repeat="(key,val) in fields" ng-switch on="val.type">
+        <label class="col-sm-2 control-label" for="{{key}}">{{key | humanize}}:</label>
+        <div class="col-sm-8">
+          <input ng-switch-when="string" class="form-control" title="{{val.help_text}}" name="{{key}}" type="text" value="{{val.default}}"/>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+{% endverbatim %}

@@ -1,0 +1,59 @@
+.logo a img {
+  padding-top: 14px;
+}
+
+.navbar-nav li a {
+  line-height: 38px;
+}
+
+.avatar {
+  height: 32px;
+  margin: 0 8px 2px 0;
+  width: 32px;
+}
+
+.username {
+  font-weight: bold;
+  /*color: #E9662D;*/
+}
+
+.navbar-right a.dropdown-toggle:hover {
+  text-decoration: none;
+}
+
+.navbar-right a.dropdown-toggle {
+  color: #EBEBEB;
+}
+
+.navbar-right ul.dropdown-menu {
+  margin-top: 23px;
+}
+
+.dropdown > div {
+  padding: 8px;
+}
+
+.nav, .pagination, .carousel, .panel-title a { 
+  cursor: pointer; 
+}
+
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+  background-color: #485563;
+}
+
+//.nav.nav-tabs.nav-stacked {
+//  float: right;
+//}
+
+#input-form input {
+    color: #808080;
+}
+
+//#tab-content {
+//  display: inline-block;
+//}
+
+#tab-content .nav-stacked {
+  float: right;
+}
