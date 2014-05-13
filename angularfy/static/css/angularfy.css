@@ -14,7 +14,6 @@
 
 .username {
   font-weight: bold;
-  /*color: #E9662D;*/
 }
 
 .navbar-right a.dropdown-toggle:hover {
@@ -37,23 +36,74 @@
   cursor: pointer; 
 }
 
-.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
   background-color: #485563;
 }
 
-//.nav.nav-tabs.nav-stacked {
-//  float: right;
-//}
-
-#input-form input {
-    color: #808080;
+.nav-tabs li span.icon {
+  font-size: 18px;
+  display: inline-block;
+  margin: 0 12px 0 0;
+}
+.nav-tabs li span.icon-warn {
+  margin: 2px 15px 0 0;
 }
 
-//#tab-content {
-//  display: inline-block;
-//}
+#input-form {
+  padding-left: 50px;
+}
+
+#input-form input {
+  color: #808080;
+}
 
 #tab-content .nav-stacked {
   float: right;
+}
+
+#input-form input {
+  margin-top: 5px;
+}
+
+#input-form span.icon-status {
+  display: inline-block;
+  font-size: 20px;
+  height: 100%;
+  padding-top: 12px;
+}
+
+.tab-btns {
+  padding-top: 30px;
+  text-align: center;
+}
+
+.tab-btn {
+  width: 90px;
+}
+
+.tab-btn .icon-arrow-right {
+  padding: 0 0 0 10px;
+}
+
+.tab-btn .icon-arrow-left {
+  padding: 0 10px 0 0;
+}
+
+/* Lovinginly borrowed from https://github.com/chrispittman/angular-taglist/blob/master/css/angular-taglist-directive.css */
+div.taglist .tag {
+  padding: 6px 10px;
+  margin-right: 10px;
+}
+div.taglist span.tag a {
+  font-weight: bold;
+  color: #EBEBEB;
+  text-decoration:none;
+  padding-right: 5px;
+}
+.tags_clear {
+  clear: both; 
+  width: 100%; 
+  height: 0px; 
 }
