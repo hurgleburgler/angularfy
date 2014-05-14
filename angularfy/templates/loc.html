@@ -1,36 +1,64 @@
 {% verbatim %}
 <div id="tab-content" ng-controller="TabsCtrl">
-  <tabset vertical="true">
-    <tab ng-click="tabChanged(tab)" ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disabled="tab.disabled">
-      <tab-heading><span class="icon icon-warn icon-checkbox-unchecked"></span><span class="icon {{tab.icon}}"></span>{{tab.title}}</tab-heading>
-    </tab>
-  </tabset>
-  <div class="row col-sm-10">
-    <form class="form-horizontal" name="form" role="form" id="input-form" ng-controller="FormCtrl">
+  <div class="to-right col-sm-3">
+    <tabset vertical="true">
+      <tab ng-click="tabChanged(tab)" ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disabled="tab.disabled" select="setIndex($index)">
+        <tab-heading>
+          <span ng-if="tab.validated == true" class="icon icon-warn text-success icon-checkbox-checked"></span>
+          <span ng-if="tab.validated == false" class="icon icon-warn icon-checkbox-unchecked"></span>
+          <span class="icon {{tab.icon}}"></span>{{tab.title}}
+        </tab-heading>
+      </tab>
+    </tabset>
+    <div id="current-offer" ng-controller="LenderCtrl" class="panel panel-default">
+      <div class="offer-lender panel-heading">{{lender.name}} Credit Line Terms</div>
+      <div class="panel-body">
+        <div class="offer-range"><h2>${{lender.range[0]}} - {{lender.range[1]}}</h2></div>
+        <div class="offer-percent"><h3>{{lender.percent[0]}}% - {{lender.percent[1]}}%</h3></div>
+      </div>
+      <div class="panel-footer">
+        <div class="get-loc" ng-if="myForm.complete == 100">
+          <button class="btn btn-success btn-lg" ng-click="getLoc()"><span class="icon icon-thumbs-up"></span>Get the LOC!</button>
+        </div>
+        <div ng-if="myForm.complete != 100">
+          <div class="progress">{{myForm.complete}}%
+            <div class="progress-bar" style="width: {{myForm.complete}}%;"></div>
+          </div>
+          <div>
+            <span class="estimate">Estimate</span>
+            <span class="icon-arrow-right"></span>
+            <span class="offer">Offer</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row col-sm-9">
+    <form class="form-horizontal" name="form" role="form" id="input-form" ng-controller="FormCtrl" ng-submit="processForm()">
       <legend>{{name}}</legend>
       <div class="form-group" ng-repeat="(key,val) in fields" ng-switch on="val.type" ng-controller="InputCtrl">
         <label class="col-sm-2 control-label" for="{{key}}">{{key | humanize}}:</label>
-        <div class="col-sm-8">
+        <div class="col-sm-7">
           <div ng-switch-when="string">
-            <input ng-required="val.nullable != true" ng-model="data.message" class="form-control" tooltip="{{val.help_text}}" name="{{key}}" type="text" value="{{val.default}}" placeholder="{{val.default}}"/>
+            <input ng-required="val.nullable != true" ng-model="data.message" class="form-control" tooltip="{{val.help_text}}" type="text" value="{{val.default}}" placeholder="{{val.default}}"/>
           </div>
           <div ng-switch-when="related" ng-controller="TypeaheadCtrl">
             <input ng-required="val.nullable != true" ng-model="data.message" ng-if="val.related_type == 'to_one'" type="text" ng-model="asyncSelected" tooltip="{{val.help_text}}" placeholder="{{val.help_text}}" typeahead="entry for entry in getTypeahead($viewValue)" typeahead-loading="loadingIndustries" class="form-control"/>
             <taglist tag-data="data.message" ng-if="val.related_type == 'to_many'" taglist-blur-timeout="250"><input ng-required="val.nullable != true" type="text" ng-model="asyncSelected" tooltip="{{val.help_text}}" placeholder="{{val.help_text}}" typeahead="entry for entry in getTypeahead($viewValue)" typeahead-loading="loadingIndustries" class="form-control"/></taglist>
           </div>
           <div ng-switch-when="decimal">
-            <input ng-required="val.nullable != true" ng-model="data.message" class="form-control" tooltip="{{val.help_text}}" type="number" name="input" value="{{val.default}}"/>
+            <input ng-required="val.nullable != true" ng-model="data.message" class="form-control" tooltip="{{val.help_text}}" type="text" value="{{val.default}}"/>
           </div>
           <div ng-switch-when="integer">
-            <input ng-required="val.nullable != true" ng-model="data.message" class="form-control" tooltip="{{val.help_text}}" type="number" name="input" ng-model="value" value="{{val.default}}"/>
+            <input ng-required="val.nullable != true" ng-model="data.message" class="form-control" tooltip="{{val.help_text}}" type="text" value="{{val.default}}"/>
           </div>
         </div>
         <span ng-hide="data.message == ''" ng-if="val.nullable != true" class="icon-status text-success icon-checkmark" tooltip="Value Added!"></span>
         <span ng-show="data.message == ''" ng-if="val.nullable != true" class="icon-status text-warning icon-warning" tooltip="Required Field"></span>
       </div>
       <div class="tab-btns row col-sm-12">
-        <button class="tab-btn btn btn-default btn-sm" ng-click="tabs[0].active = true" disabled><span class="icon icon-arrow-left"></span>Previous</button>
-        <button class="tab-btn btn btn-default btn-sm" ng-click="tabs[1].active = true" ng-disabled="form.$invalid">Next<span class="icon icon-arrow-right"></span></button>
+        <button class="tab-btn btn btn-default btn-sm" ng-click="prev()" ng-disabled="{{prevButtonDisabled}}"><span class="icon icon-arrow-left"></span>Previous</button>
+        <button class="tab-btn btn btn-default btn-sm" ng-click="next()" ng-disabled="form.$invalid || {{nextButtonDisabled}}">Next<span class="icon icon-arrow-right"></span></button>
       </div>
     </form>
   </div>

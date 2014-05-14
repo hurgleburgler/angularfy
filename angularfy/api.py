@@ -1,6 +1,6 @@
 from tastypie.resources import ModelResource, ALL
 from tastypie import fields, utils
-from angularfy.models import Owner, Entity, Application, Loc, KeyFactor, Goal, Industry
+from angularfy.models import Owner, Entity, Application, Loc, KeyFactor, Goal, Industry, Financials, Option5
 
 class OwnerResource(ModelResource):
     created_on = fields.DateTimeField(readonly=True, default=utils.now)
@@ -62,4 +62,14 @@ class GoalResource(ModelResource):
     class Meta:
         queryset = Goal.objects.all()
         resource_name = 'goals'
+
+class FinancialsResource(ModelResource):
+    class Meta:
+        queryset = Financials.objects.all()
+        resource_name = 'financials'
+
+class Option5Resource(ModelResource):
+    class Meta:
+        queryset = Option5.objects.all()
+        resource_name = 'option5'
 

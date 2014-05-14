@@ -1,3 +1,7 @@
+body {
+  min-width: 1035px;
+}
+
 .logo a img {
   padding-top: 14px;
 }
@@ -57,14 +61,11 @@
 
 #input-form input {
   color: #808080;
-}
-
-#tab-content .nav-stacked {
-  float: right;
-}
-
-#input-form input {
   margin-top: 5px;
+}
+
+#tab-content .to-right {
+  float: right;
 }
 
 #input-form span.icon-status {
@@ -89,6 +90,48 @@
 
 .tab-btn .icon-arrow-left {
   padding: 0 10px 0 0;
+}
+
+#current-offer {
+  margin-right: 2px;
+  margin-top: 50px
+}
+
+#current-offer .panel-body > div {
+  text-align: center;
+}
+
+#current-offer .offer-range h2 {
+  margin-top: 0px;
+}
+
+#current-offer .progress {
+  margin-bottom: 0px;
+}
+
+#current-offer .panel-footer .estimate {
+  float: left;
+}
+
+#current-offer .panel-footer .offer {
+  float: right;
+}
+
+#current-offer .panel-footer .icon-arrow-right {
+  padding-left: 31%;
+  text-align: center;
+}
+
+#current-offer .progress.ng-binding {
+  text-align: center;
+}
+
+#current-offer .get-loc {
+  text-align: center;
+}
+
+#current-offer .get-loc .icon.icon-thumbs-up {
+    margin: 0 14px 0 0;
 }
 
 /* Lovinginly borrowed from https://github.com/chrispittman/angular-taglist/blob/master/css/angular-taglist-directive.css */

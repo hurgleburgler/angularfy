@@ -4,7 +4,7 @@ from angularfy.views import views
 
 # RESTful stuffs
 from tastypie.api import Api
-from angularfy.api import OwnerResource, EntityResource, ApplicationResource, LocResource, KeyFactorResource, GoalResource, IndustryResource
+from angularfy.api import OwnerResource, EntityResource, ApplicationResource, LocResource, KeyFactorResource, GoalResource, IndustryResource, Option5Resource, FinancialsResource
 from django.conf.urls import include
 
 v1_api = Api(api_name='v1')
@@ -15,6 +15,8 @@ v1_api.register(LocResource())
 v1_api.register(KeyFactorResource()) 
 v1_api.register(GoalResource()) 
 v1_api.register(IndustryResource()) 
+v1_api.register(Option5Resource()) 
+v1_api.register(FinancialsResource()) 
 
 urlpatterns = patterns('',
     url(r'^api/', include(v1_api.urls)),

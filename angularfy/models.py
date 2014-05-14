@@ -55,3 +55,15 @@ class Goal(models.Model):
 
 class Industry(models.Model):
     description = models.TextField()
+
+class Financials(models.Model):
+    revenue = models.PositiveIntegerField(default=0)
+    expenses = models.PositiveIntegerField(default=0)
+    debt = models.PositiveIntegerField(default=0)
+    entity = models.ForeignKey('Entity')
+
+class Option5(models.Model):
+    option1 = models.TextField(default='option1')
+    option2 = models.TextField(default='option2')
+    option3 = models.CharField(default='option3', max_length=50)
+    option4 = models.CharField(default='option4', max_length=50)

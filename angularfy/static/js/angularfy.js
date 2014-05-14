@@ -84,7 +84,7 @@ angularfy.config(function($provide, $routeProvider) {
     },{
       name: 'Option 5',
       title: 'Option 5',
-      schema: 'v1/options',
+      schema: 'v1/option5',
       icon: 'icon-shield',
       disabled: true
     }
@@ -95,12 +95,42 @@ angularfy.config(function($provide, $routeProvider) {
 // Lovingly borrowed from http://angular-ui.github.io/bootstrap
 
 var TabsCtrl = function ($scope, questionnaire) {
-  $scope.tabs = questionnaire;
+  $scope.myForm = {};
+  $scope.tabs = _.map(questionnaire, function(obj) {
+    obj.validated = false;
+    return obj;
+  });
 
-  $scope.updateInputs = function(event, key) {
-console.log($scope);
-console.log(event);
-console.log(key);
+  $scope.tabIndex = 0;
+  $scope.nextButtonDisabled = false;
+  $scope.prevButtonDisabled = true;
+  $scope.form = '';
+
+  $scope.next = function() {
+     if($scope.tabIndex !== $scope.tabs.length -1 ){
+      $scope.tabs[$scope.tabIndex].active = false;
+      $scope.tabs[$scope.tabIndex].disabled = false;
+      $scope.tabIndex++
+      $scope.tabs[$scope.tabIndex].active = true;
+     }
+
+     if($scope.tabIndex === $scope.tabs.length -1){
+        $scope.nextButtonDisabled = true;
+     } else {
+        $scope.nextButtonDisabled = false;
+     }
+
+     if($scope.tabIndex === 0){
+        $scope.prevButtonDisabled = true;
+     } else {
+        $scope.prevButtonDisabled = false;
+     }
+
+    $scope.$broadcast('tabChanged', $scope.tabs[$scope.tabIndex]);
+  };
+
+  $scope.setIndex = function($index){
+      $scope.tabIndex = $index;
   };
 
   $scope.tabChanged = function(tab) {
@@ -147,6 +177,29 @@ angularfy.controller('TypeaheadCtrl', ['$scope', '$http', 'questionnaire',
   }
 ]);
 
+angularfy.factory('LenderService', function($http) {
+  return {
+    getData: function(name) {
+      return {
+        name: 'ABL',
+        range: [0, 250000],
+        percent: [70, 90],
+        factors: {
+          positive: [
+            'In business for more than 2 years',
+            'Low expenses compared to revenue'
+          ],
+          negative: [
+            'You have been in business for more than 2 years',
+            'Your monthly expenses are low compared to your revenue',
+            'Owners credit score below 700'
+          ]
+        }
+      };
+    }
+  };
+});
+
 angularfy.factory('FormService', function($http) {
   return {
     getSchema: function(name) {
@@ -154,6 +207,15 @@ angularfy.factory('FormService', function($http) {
     }
   }
 });
+
+angularfy.controller('LenderCtrl', ['$scope', 'LenderService',
+  function ($scope, LenderService) {
+    $scope.load = function(event, tab) {
+      $scope.lender = LenderService.getData();
+    };
+    $scope.load();
+  }
+]);
 
 angularfy.controller('FormCtrl', ['$scope', 'FormService', 'questionnaire',
   function ($scope, FormService, questionnaire) {
@@ -171,8 +233,20 @@ angularfy.controller('FormCtrl', ['$scope', 'FormService', 'questionnaire',
       });
     };
 
+    $scope.processForm = function() {
+    };
+
     $scope.$on('tabChanged', $scope.loadForm);
     $scope.loadForm({}, questionnaire[0]);
+
+    $scope.$watch('form.$invalid', function(isInvalid) {
+      if('tab' in $scope) { 
+        $scope.tab.validated = !isInvalid;
+        if(!isInvalid) {
+          $scope.myForm.complete = (($scope.tabIndex + 1) / $scope.tabs.length) * 100;
+        }
+      }
+    })
   }
 ]);
 
